@@ -8,10 +8,6 @@ def newgame():
 
     return players
 
-used_field = [] # This will hold all fields already used
-
-#used_field.append()
-
 def change_player(player, players):
     if player == players[1]:
         return players[0]
@@ -39,15 +35,31 @@ def print_board(board):
     print('|_____|_____|_____|')
     print('\n')
 
-def choise(player):
-    field = int(input(f"{player}! Choose a field on the board (1-9)."))
-    return field
+def choise(player, board):
+    field = int(input(f"{player}! Choose a field on the board (1-9): "))
+    while True:
+        if board[field] == " ":
+            return field
+        else:
+            field = int(input(f"{player}! Choose another field because it is occupied (1-9): "))
+
+def victory(player, board):  # parameter 1: dictionary, parameter 2: "x"/"o", return: none/"x"/"o"
+    if player == players[0]:
+        xo = "x"
+    elif player == players[1]:
+        xo = "o"
+    victs = ((1, 2, 3), (4, 5, 6), (7, 8, 9), (1, 4, 7), (2, 5, 8), (3, 6, 9), (1, 5, 9), (3, 5, 7))
+    for vict in victs:
+        if board[vict[0]] == board[vict[1]] == board[vict[2]] == xo:
+            print(f"Nyert {player}!")
+            return False
 
 players = newgame()
 player = players[0]
 board = {1: " ", 2: " ", 3: " ", 4: " ", 5: " ", 6: " ", 7: " ", 8: " ", 9: " "}
-while True:
+used_field_list = [] # This will hold all fields already used
+while victory(player, board) == True:
     print_board(board)
-    field = choise(player)
+    field = choise(player, board)
     board = board_modify(player, board, field)
     player = change_player(player, players)
