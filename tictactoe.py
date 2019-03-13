@@ -58,8 +58,11 @@ players = newgame()
 player = players[0]
 board = {1: " ", 2: " ", 3: " ", 4: " ", 5: " ", 6: " ", 7: " ", 8: " ", 9: " "}
 used_field_list = [] # This will hold all fields already used
-while victory(player, board) == True:
-    print_board(board)
+x = None
+print_board(board)
+while x == None:
     field = choise(player, board)
     board = board_modify(player, board, field)
+    print_board(board)
+    x = victory(player, board)
     player = change_player(player, players)
