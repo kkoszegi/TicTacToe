@@ -36,12 +36,17 @@ def print_board(board):
     print('\n')
 
 def choise(player, board):
-    field = int(input(f"{player}! Choose a field on the board (1-9): "))
     while True:
-        if board[field] == " ":
+        try:
+            field = int(input(f"{player}! Choose a field on the board (1-9): "))
+        except ValueError:
+            print("Please, enter a NUMBER, idiot!")
+            continue
+        if (1 <= field <= 9) and (board[field] == " "):
             return field
         else:
-            field = int(input(f"{player}! Choose another field because it is occupied (1-9): "))
+            print("Invalid value!")
+            continue
 
 def victory(player, board):  # parameter 1: dictionary, parameter 2: "x"/"o", return: none/"x"/"o"
     if player == players[0]:
